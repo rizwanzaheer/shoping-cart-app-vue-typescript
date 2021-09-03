@@ -25,5 +25,24 @@ yarn test:unit
 yarn lint
 ```
 
+
+## Environment Variables
+
+The environment variables can be found and modified in the `.env` file. They come with these default values:
+
+```bash
+NODE_ENV=production
+# Root API URL
+VUE_APP_ROOT_API_URL=http://localhost:3000/
+```
+
+Set the environment variables:
+
+```bash
+cp .env.example .env
+
+# open .env and modify the environment variables (if needed)
+```
+
 ### Customize configuration
 See [Configuration Reference](https://cli.vuejs.org/config/).
