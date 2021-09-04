@@ -10,7 +10,7 @@ import {
 import HttpService from '@/service/HttpService';
 
 export interface IProductView {
-  productId: number;
+  id: number;
   productName?: string;
   price?: string;
   imagePath?: string;
@@ -27,7 +27,7 @@ export interface IProductState {
 class Product extends VuexModule implements IProductState {
   public products: [IProductView] = [
     {
-      productId: Math.random(),
+      id: Math.random(),
       productName: 'Pepsi',
       price: '124',
       imagePath: 'file/images',
@@ -53,20 +53,25 @@ class Product extends VuexModule implements IProductState {
   public async fetchProducts() {
     const { data: products } = await HttpService.get('products');
     console.log('action fetchProducts is: ', products);
-    this.updateProducts(products);
-    return products;
+    this.updateProducts(products.results);
+    // return products;
   }
 
   @Action
   public async searchItem(searchText: string) {
-    console.log('searchItem searchText is: ', searchText);
-    const { data: products } = await HttpService.get(
-      `product/search?searchText=${searchText}`
-    );
+    try {
+      console.log('searchItem searchText is: ', searchText);
+      const { data: products } = await HttpService.get(
+        `products/search?name=${searchText}`
+      );
 
-    console.log('action fetchProducts is: ', products);
-    this.updateProducts(products);
-    return products;
+      console.log('action fetchProducts is: ', products);
+      this.updateProducts(products);
+      // return products;
+    } catch (e) {
+      console.log('error is: ', e.response.data.message);
+      alert(e.response.data.message);
+    }
   }
 }
 

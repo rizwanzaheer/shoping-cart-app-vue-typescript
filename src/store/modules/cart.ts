@@ -25,7 +25,7 @@ class Cart extends VuexModule implements ICardState {
   public items: [IItemView] = [
     {
       itemInfo: {
-        productId: Math.random(),
+        id: Math.random(),
         productName: 'Fanta',
         price: '124',
         imagePath: 'file/images',

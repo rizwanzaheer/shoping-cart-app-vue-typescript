@@ -1,19 +1,10 @@
 <template>
-  <div class="home">
-    <h1>Products:</h1>
-    <input @input="searchItem($event.target.value)" />
+  <div class="product-container">
+    <h1 class="text-left mgl20">Products:</h1>
+    <SearchBar />
     <code>
       <pre>
-
       {{ getAllProducts }}
-      </pre>
-    </code>
-
-    Cart Items:
-    <code>
-      <pre>
-
-      {{ getCartItems }}
       </pre>
     </code>
   </div>
@@ -23,9 +14,12 @@
 import { Component, Vue } from "vue-property-decorator";
 import { ProductModule } from "@/store/modules/product";
 import { CartModule } from "@/store/modules/cart";
+import SearchBar from "@/components/SearchBar/index.vue";
 
 @Component({
-  components: {},
+  components: {
+    SearchBar,
+  },
 })
 export default class Home extends Vue {
   get getAllProducts() {
@@ -36,26 +30,20 @@ export default class Home extends Vue {
     return CartModule.items;
   }
 
-  private searchItem(e: string) {
-    console.log("update user name e is: ", e);
-    ProductModule.searchItem(e);
-  }
-
   mounted() {
-    console.log("hoe is calling ");
-    // ProductModule.fetchProducts();
-    CartModule.addItemInCart({
-      itemInfo: {
-        productId: Math.random(),
-        productName: "Coca Cola",
-        price: "124",
-        imagePath: "file/images",
-        imageName: "CocaCola.jpg",
-        notAvailableFrom: new Date(),
-        notAvailableTo: new Date(),
-      },
-      itemCount: 12,
-    });
+    ProductModule.fetchProducts();
   }
 }
 </script>
+
+
+
+<style lang="scss">
+.product-container {
+  background: grey;
+  width: 100%;
+  padding: 50px 5%;
+  display: flex;
+  flex-direction: column;
+}
+</style>

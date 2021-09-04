@@ -1,0 +1,199 @@
+@import './variables.scss';
+@import './mixins.scss';
+@import './transition.scss';
+
+/* Global scss */
+
+body {
+  height: 100%;
+  -moz-osx-font-smoothing: grayscale;
+  -webkit-font-smoothing: antialiased;
+  font-family: -apple-system, BlinkMacSystemFont, Segoe UI, Helvetica Neue,
+    Helvetica, PingFang SC, Hiragino Sans GB, Microsoft YaHei, Arial, sans-serif;
+}
+
+html {
+  height: 100%;
+}
+
+#app {
+  height: 100%;
+}
+
+*,
+*:before,
+*:after {
+  box-sizing: border-box;
+}
+
+a,
+a:focus,
+a:hover {
+  color: inherit;
+  outline: none;
+  text-decoration: none;
+}
+
+div:focus {
+  outline: none;
+}
+
+.clearfix {
+  @include clearfix;
+}
+
+label {
+  font-weight: 700;
+}
+
+.app-container {
+  padding: 20px;
+}
+
+.components-container {
+  margin: 30px 50px;
+  position: relative;
+}
+
+.fixed-width {
+  .button--mini {
+    padding: 7px 10px;
+    min-width: 60px;
+  }
+}
+
+.filter-container {
+  padding-bottom: 10px;
+
+  .filter-item {
+    display: inline-block;
+    vertical-align: middle;
+    margin-bottom: 10px;
+  }
+}
+
+.link-type,
+.link-type:focus {
+  color: #337ab7;
+  cursor: pointer;
+
+  &:hover {
+    color: rgb(32, 160, 255);
+  }
+}
+
+.text-center {
+  text-align: center;
+}
+
+.text-left {
+  text-align: left;
+}
+
+.no-padding {
+  padding: 0px !important;
+}
+
+.pdr5 {
+  padding-right: 5px;
+}
+.pdr10 {
+  padding-right: 10px;
+}
+.pdr15 {
+  padding-right: 15px;
+}
+.pdr20 {
+  padding-right: 20px;
+}
+
+.pdl5 {
+  padding-left: 5px;
+}
+.pdl10 {
+  padding-left: 10px;
+}
+.pdl15 {
+  padding-left: 15px;
+}
+.pdl20 {
+  padding-left: 20px;
+}
+
+.pdt5 {
+  padding-top: 5px;
+}
+.pdt10 {
+  padding-top: 10px;
+}
+.pdt15 {
+  padding-top: 15px;
+}
+.pdt20 {
+  padding-top: 20px;
+}
+
+.pdb5 {
+  padding-bottom: 5px;
+}
+.pdb10 {
+  padding-bottom: 10px;
+}
+.pdb15 {
+  padding-bottom: 15px;
+}
+.pdb20 {
+  padding-bottom: 20px;
+}
+
+.mgr5 {
+  margin-right: 5px;
+}
+.mgr10 {
+  margin-right: 10px;
+}
+.mgr15 {
+  margin-right: 15px;
+}
+.mgr20 {
+  margin-right: 20px;
+}
+
+.mgl5 {
+  margin-left: 5px;
+}
+.mgl10 {
+  margin-left: 10px;
+}
+.mgl15 {
+  margin-left: 15px;
+}
+.mgl20 {
+  margin-left: 20px;
+}
+
+.mgt5 {
+  margin-top: 5px;
+}
+.mgt10 {
+  margin-top: 10px;
+}
+.mgt15 {
+  margin-top: 15px;
+}
+.mgt20 {
+  margin-top: 20px;
+}
+
+.mgb5 {
+  margin-bottom: 5px;
+}
+.mgb10 {
+  margin-bottom: 10px;
+}
+.mgb15 {
+  margin-bottom: 15px;
+}
+.mgb20 {
+  margin-bottom: 20px;
+}
