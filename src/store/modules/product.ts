@@ -12,7 +12,7 @@ import HttpService from '@/service/HttpService';
 export interface IProductView {
   id: number;
   productName?: string;
-  price?: string;
+  price?: number;
   imagePath?: string;
   imageName?: string;
   notAvailableFrom?: Date;
@@ -29,7 +29,7 @@ class Product extends VuexModule implements IProductState {
     {
       id: Math.random(),
       productName: 'Pepsi',
-      price: '124',
+      price: 124,
       imagePath: 'file/images',
       imageName: 'pepsi.jpg',
       notAvailableFrom: new Date(),

@@ -27,7 +27,7 @@ class Cart extends VuexModule implements ICardState {
       itemInfo: {
         id: Math.random(),
         productName: 'Fanta',
-        price: '124',
+        price: 124,
         imagePath: 'file/images',
         imageName: 'fanta.jpg',
         notAvailableFrom: new Date(),

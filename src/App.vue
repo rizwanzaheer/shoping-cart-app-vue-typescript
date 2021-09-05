@@ -19,7 +19,7 @@
   margin-right: -8px;
   margin-bottom: -14px;
   margin-left: -8px;
-  background: gray;
+  // background: gray;
 }
 
 #nav {

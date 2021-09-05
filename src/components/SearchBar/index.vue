@@ -1,30 +1,58 @@
 <template>
-  <div class="input-group">
-    <div class="input-group-prepend">
-      <div class="input-group-text"><i class="fas fa-search"></i></div>
-    </div>
-    <input
-      @input="searchItem($event.target.value)"
-      type="text"
-      class="from-control"
-    />
-    <div class="input-group-append">
-      <div class="input-group-text"><i class="fas fa-times"></i></div>
+  <div class="search-bar-container">
+    <!-- <label class="text-left" v-if="type !== 'search'">label</label> -->
+    <div class="input-group">
+      <div :class="['input-group-prepend', 'input-group-prepend-icon-push']">
+        <div class="input-group-text"><i class="fas fa-search"></i></div>
+      </div>
+      <input
+        v-model="searchText"
+        type="text"
+        :class="['from-control', 'input-text-style', 'push-right']"
+        :placeholder="placeholder"
+      />
+      <div class="input-group-append" v-if="searchText">
+        <div class="input-group-text" @click="clearSearch">
+          <i class="fas fa-times" />
+        </div>
+      </div>
     </div>
   </div>
 </template>
 
 
 <script lang="ts">
-import { Component, Vue } from "vue-property-decorator";
+import { Component, Vue, Watch, Prop } from "vue-property-decorator";
 import { ProductModule } from "@/store/modules/product";
+import debounce from "lodash-es/debounce";
 
 @Component({
   name: "SearchBar",
 })
 export default class extends Vue {
-  private searchItem(e: string) {
-    ProductModule.searchItem(e);
+  private searchText = "";
+  @Prop({ default: "Search ...." }) private placeholder!: string;
+  // private searchItem(e: string) {
+  //@input="searchItem($event.target.value)"  // call this in component
+  //   // ProductModule.searchItem(e);
+  // }
+
+  created() {
+    this.onDebouncedVariable = debounce(this.onDebouncedVariable, 500);
+  }
+
+  @Watch("searchText")
+  onVariable() {
+    this.onDebouncedVariable();
+  }
+
+  private onDebouncedVariable() {
+    ProductModule.searchItem(this.searchText);
+  }
+
+  clearSearch() {
+    this.searchText = "";
+    ProductModule.searchItem("");
   }
 }
 </script>
@@ -34,20 +62,33 @@ export default class extends Vue {
 
 <style lang="scss">
 @import "./src/styles/variables.scss";
+
+.search-bar-container {
+  display: flex;
+  flex-direction: column;
+  label {
+    font-size: 25px;
+    color: $input-text-title-color;
+  }
+}
+
 input {
   margin: 0;
   font-family: inherit;
   font-size: inherit;
   line-height: inherit;
   border-color: #ada18d;
-  color: #ffffff;
-  background-color: #242729;
+  color: $input-text-color;
+  background-color: $input-text-bg;
   overflow: visible;
 }
 
 input[type="text" i] {
   padding: 1px 2px;
   width: 90%;
+  height: inherit;
+  font-size: 1.5rem;
+  font-weight: bold;
 }
 
 .from-control {
@@ -65,7 +106,7 @@ input[type="text" i] {
   min-width: 0;
   margin-bottom: 0;
 
-  color: rgb(255, 255, 249);
+  // color: rgb(255, 255, 249);
   background-color: rgb(36, 39, 41);
   border-color: rgb(90, 98, 102);
 
@@ -76,7 +117,7 @@ input[type="text" i] {
   font-size: 1rem;
   font-weight: 400;
   line-height: 1.5;
-  color: #495057;
+  // color: #495057;
   background-color: $input-text-bg;
   background-clip: padding-box;
   border: 1px solid #ced4da;
@@ -89,12 +130,21 @@ input[type="text" i] {
   flex-wrap: wrap;
   align-items: stretch;
   width: 100%;
+  height: 55px;
 }
 .input-group-prepend,
 .input-group-append {
   margin-right: -1px;
   display: flex;
 }
+
+.input-group-prepend-icon-push {
+  position: absolute;
+  left: 12px;
+  z-index: 1;
+  top: 8px;
+}
+
 .input-group-text {
   border-top-right-radius: 0;
   border-bottom-right-radius: 0;
@@ -119,12 +169,36 @@ input[type="text" i] {
   // background-color: #e9ecef;
   // border: 1px solid #ced4da;
   border-radius: 0.25rem;
-  position: absolute;
-  margin-left: -40px;
-  margin-top: 4px;
 }
 
-// .input-group-append{
-//   margin-left: -1px;
-// }
+.input-group-append {
+  position: absolute;
+  right: 10px;
+  top: 8px;
+}
+
+.input-text-style {
+  width: 250px;
+  border-radius: 5px;
+  // background: $darkGray;
+  border: 1px solid #ccc;
+  outline: none;
+  padding: 6px;
+}
+.fas {
+  font-size: 28px;
+  font-weight: lighter;
+  cursor: pointer;
+}
+.fa-search {
+  font-weight: 500;
+}
+
+.input-text-style:focus {
+  border: 1px solid #56b4ef;
+  box-shadow: 0px 0px 3px 1px #c8def0;
+}
+.push-right {
+  padding-left: 60px !important;
+}
 </style>

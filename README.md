@@ -44,5 +44,10 @@ cp .env.example .env
 # open .env and modify the environment variables (if needed)
 ```
 
+## Product Images
+Product images are present in product folder under the src -> assets -> product
+You can use these image to create the product when creating the product via APIs
+
+
 ### Customize configuration
 See [Configuration Reference](https://cli.vuejs.org/config/).

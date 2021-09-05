@@ -1,12 +1,27 @@
 <template>
   <div class="product-container">
-    <h1 class="text-left mgl20">Products:</h1>
-    <SearchBar />
-    <code>
+    <h1 class="text-left title">Products:</h1>
+    <SearchBar placeholder="Search product..." />
+
+    <div class="product-card">
+      <Card
+        v-for="product in getAllProducts"
+        cardType="product-view"
+        :cardProductItem="product"
+        :key="product.id"
+      />
+
+      <!-- <code>
       <pre>
       {{ getAllProducts }}
       </pre>
     </code>
+    <code>
+      <pre>
+      {{ getCartItems }}
+      </pre>
+    </code> -->
+    </div>
   </div>
 </template>
 
@@ -15,10 +30,12 @@ import { Component, Vue } from "vue-property-decorator";
 import { ProductModule } from "@/store/modules/product";
 import { CartModule } from "@/store/modules/cart";
 import SearchBar from "@/components/SearchBar/index.vue";
+import Card from "@/components/Card/index.vue";
 
 @Component({
   components: {
     SearchBar,
+    Card,
   },
 })
 export default class Home extends Vue {
@@ -39,11 +56,18 @@ export default class Home extends Vue {
 
 
 <style lang="scss">
+@import "./src/styles/variables.scss";
+.title {
+  color: $title-color;
+}
 .product-container {
-  background: grey;
+  // background: grey;
   width: 100%;
   padding: 50px 5%;
   display: flex;
   flex-direction: column;
+  .product-card {
+    margin-top: 5rem;
+  }
 }
 </style>
