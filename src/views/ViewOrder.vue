@@ -1,11 +1,25 @@
 <template>
   <div class="checkout-container">
     <div class="order-info-container">
-      <h1 class="title">Order #{{ getOrder.orderNumber }}</h1>
-      <h1 class="order-sub-title">has been placed</h1>
-      <router-link to="view-order">
+      <h1 class="text-left title">Order Info: #{{ getOrder.orderNumber }}</h1>
+
+      <!-- <code>
+        <pre>
+            {{ getOrder }}
+          </pre
+        >
+      </code> -->
+
+      <h2
+        class="order-view-sub-title text-left"
+        v-for="item in getCartItems"
+        :key="item.itemInfo.id"
+      >
+        Product Name: {{ item.itemInfo.name }}, Item: {{ item.itemCount }}x
+      </h2>
+      <!-- <router-link to="view-order">
         <span class="order-view-link">View Order</span>
-      </router-link>
+      </router-link> -->
     </div>
 
     <!-- <div class="user-detail-card">
@@ -40,7 +54,7 @@ import BaseButton from "@/components/BaseButton/index.vue";
     BaseButton,
   },
 })
-export default class Order extends Vue {
+export default class ViewOrder extends Vue {
   get getCartItems() {
     return CartModule.items;
   }
@@ -78,10 +92,12 @@ export default class Order extends Vue {
     .title {
       font-size: 70px;
     }
-    .order-sub-title {
+    .order-view-sub-title {
       margin-top: -50px;
       color: $input-text-title-color;
       margin-bottom: 60px;
+      text-transform: capitalize;
+      margin-left: 5px;
     }
     .order-view-link {
       font-size: 32px;
@@ -91,9 +107,7 @@ export default class Order extends Vue {
       cursor: pointer;
     }
   }
-  // .product-card {
-  //   min-height: calc(100vh - 270px);
-  // }
+
   .checkout-button-container {
     // position: absolute;
     // bottom: 0;

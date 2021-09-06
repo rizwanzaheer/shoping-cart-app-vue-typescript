@@ -1,17 +1,14 @@
 <template>
-  <div class="search-bar-container">
-    <!-- <label class="text-left" v-if="type !== 'search'">label</label> -->
+  <div class="input-container">
+    <label class="text-left">{{ label }}</label>
     <div class="input-group">
-      <div :class="['input-group-prepend', 'input-group-prepend-icon-push']">
-        <div class="input-group-text"><i class="fas fa-search"></i></div>
-      </div>
       <input
-        v-model="searchText"
-        type="text"
-        :class="['from-control', 'input-text-style', 'push-right']"
+        @input="onInputChange($event.target.value)"
+        :type="type"
+        :class="['from-control', 'input-text-style']"
         :placeholder="placeholder"
       />
-      <div class="input-group-append" v-if="searchText">
+      <div class="input-group-append" v-if="inputData">
         <div class="input-group-text" @click="clearSearch">
           <i class="fas fa-times" />
         </div>
@@ -20,55 +17,65 @@
   </div>
 </template>
 
-
 <script lang="ts">
-import { Component, Vue, Watch, Prop } from "vue-property-decorator";
+import { Component, Vue, Watch, Prop, Emit } from "vue-property-decorator";
 import { ProductModule } from "@/store/modules/product";
 import debounce from "lodash-es/debounce";
 
 @Component({
-  name: "SearchBar",
+  name: "Input",
 })
 export default class extends Vue {
-  private searchText = "";
-  @Prop({ default: "Search ...." }) private placeholder!: string;
-  // private searchItem(e: string) {
-  //@input="searchItem($event.target.value)"  // call this in component
-  //   // ProductModule.searchItem(e);
-  // }
+  private inputData = "";
+  @Prop({ required: true }) private label!: string;
+  @Prop({ default: "text", required: true }) private type!: string;
+  @Prop({ default: "type text ...." }) private placeholder!: string;
 
   created() {
     this.onDebouncedVariable = debounce(this.onDebouncedVariable, 500);
   }
 
-  @Watch("searchText")
-  onVariable() {
-    this.onDebouncedVariable();
+  // @Watch("inputData")
+  // onVariable() {
+  //   // this.onDebouncedVariable();
+  //   this.onInputChange();
+  // }
+
+  private searchItem(e: string) {
+    // @input="searchItem($event.target.value)"  // call this in component
+    // ProductModule.searchItem(e);
+    this.inputData = e;
   }
 
   private onDebouncedVariable() {
-    ProductModule.searchItem(this.searchText);
+    ProductModule.searchItem(this.inputData);
+  }
+
+  @Emit()
+  onInputChange(e: string) {
+    console.log("onInputChange is: ", e);
+    return e;
   }
 
   clearSearch() {
-    this.searchText = "";
+    this.inputData = "";
     ProductModule.searchItem("");
   }
 }
 </script>
 
-
-
-
 <style lang="scss">
 @import "./src/styles/variables.scss";
 
-.search-bar-container {
+.input-container {
   display: flex;
   flex-direction: column;
   label {
     font-size: 25px;
     color: $input-text-title-color;
+    text-transform: capitalize;
+    margin: 5px;
+    margin-top: 25px;
   }
 }
 
@@ -77,13 +84,18 @@ input {
   font-family: inherit;
   font-size: inherit;
   line-height: inherit;
-  border-color: #ada18d;
+  // border-color: #ada18d;
   color: $input-text-color;
   background-color: $input-text-bg;
   overflow: visible;
+  // text-transform: capitalize;
+  margin: 5px;
 }
 
-input[type="text" i] {
+input[type="text" i],
+input[type="email" i],
+input[type="datetime-local" i],
+input[type="date" i] {
   padding: 5px ​10px;
   width: 90%;
   height: inherit;
@@ -197,8 +209,5 @@ input[type="text" i] {
 .input-text-style:focus {
   border: 1px solid #56b4ef;
   box-shadow: 0px 0px 3px 1px #c8def0;
-}
-.push-right {
-  padding-left: 60px !important;
 }
 </style>

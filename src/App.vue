@@ -1,9 +1,7 @@
 <template>
   <div id="app">
     <div id="nav">
-      <label for="" class="brand-logo" @click="onBrandLogoClick">
-        Ordering App
-      </label>
+      <label class="brand-logo" @click="onBrandLogoClick"> Ordering App </label>
       <div>
         <router-link to="/">Product</router-link> |
         <router-link to="/cart">Cart</router-link>
@@ -57,6 +55,7 @@ export default class extends Vue {
   }
   .brand-logo {
     cursor: pointer;
+    font-size: 19px;
   }
 }
 </style>

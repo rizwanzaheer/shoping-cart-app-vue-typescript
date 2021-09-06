@@ -37,6 +37,12 @@ const routes: Array<RouteConfig> = [
     component: () =>
       import(/* webpackChunkName: "about" */ '../views/Order.vue'),
   },
+  {
+    path: '/view-order',
+    name: 'ViewOrder',
+    component: () =>
+      import(/* webpackChunkName: "about" */ '../views/ViewOrder.vue'),
+  },
 ];
 
 const router = new VueRouter({

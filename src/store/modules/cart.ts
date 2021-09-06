@@ -89,12 +89,16 @@ class Cart extends VuexModule implements ICardState {
 
   @Action
   public async addItemInCart(productItem: any) {
-    console.log('addItemInCart productItem is: ', productItem);
-    // const { data: products } = await HttpService.get('products');
-    // console.log('action fetchProducts is: ', productItem);
-    this.addItems(productItem);
-    // this.insertProduct(products);
-    return productItem;
+    try {
+      console.log('addItemInCart productItem is: ', productItem);
+      // const { data: products } = await HttpService.get('products');
+      // console.log('action fetchProducts is: ', productItem);
+      this.addItems(productItem);
+      // this.insertProduct(products);
+      return productItem;
+    } catch (e) {
+      throw new Error(e);
+    }
   }
   @Action
   public resetCart() {

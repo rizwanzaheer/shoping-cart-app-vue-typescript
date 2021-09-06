@@ -3,15 +3,37 @@
     <h1 class="text-left title">Checkout:</h1>
 
     <div class="user-detail-card">
-      <div v-if="getCartTotalItems !== 0">
-        <Card
-          v-for="item in getCartItems"
-          :cardProductItem="item"
-          :key="item.itemInfo.id"
+      <h1 class="text-left title">Your details:</h1>
+
+      <div class="user-form-container">
+        <Input
+          label="First Name*"
+          placeholder="first name"
+          type="text"
+          @on-input-change="onChangeFirstName"
         />
-      </div>
-      <div v-else>
-        <h2>Oohhoo... Cart is empty!</h2>
+        <Input
+          label="Last Name*"
+          placeholder="your last name"
+          type="text"
+          @on-input-change="onChangeLastName"
+        />
+        <Input
+          label="Email*"
+          placeholder="your email"
+          type="email"
+          @on-input-change="onChangeEmail"
+        />
+
+        <div class="calender-container">
+          <h1 class="text-left title">Delivery:</h1>
+          <Input
+            label="Delivery Date*"
+            placeholder="Choose a date"
+            type="date"
+            @on-input-change="onChangeDeliverDate"
+          />
+        </div>
       </div>
     </div>
     <div class="checkout-button-container">
@@ -24,26 +46,92 @@
 <script lang="ts">
 import { Component, Vue } from "vue-property-decorator";
 import { CartModule } from "@/store/modules/cart";
+import { OrderModule } from "@/store/modules/orders";
 import Card from "@/components/Card/index.vue";
 import BaseButton from "@/components/BaseButton/index.vue";
+import Input from "@/components/Input/index.vue";
 
 @Component({
   components: {
     Card,
     BaseButton,
+    Input,
   },
 })
 export default class Checkout extends Vue {
+  private firstName: string = "";
+  private lastName: string = "";
+  private email: string = "";
+  private deliveryDate: string = "";
   get getCartItems() {
     return CartModule.items;
   }
   get getCartTotalItems() {
     return CartModule.totalItems;
   }
+  private onChangeFirstName(e: string) {
+    console.log("onChangeFirstName is: ", e);
+    this.firstName = e;
+  }
+  private onChangeLastName(e: string) {
+    console.log("onChangeLastName is: ", e);
+    this.lastName = e;
+  }
+  private onChangeEmail(e: string) {
+    console.log("onChangeEmail is: ", e);
+    this.email = e;
+  }
+  private onChangeDeliverDate(e: string) {
+    console.log("onChangeDeliverDate is: ", e);
+    this.deliveryDate = e;
+  }
+  mounted() {
+    OrderModule.getAllOrder();
+  }
 
-  onPlaceOrder() {
+  public async onPlaceOrder() {
     console.log("onPlaceOrder");
-    this.$router.push({ name: "Order" });
+
+    try {
+      if (this.firstName === "") {
+        alert("name is required!");
+        return;
+      }
+      if (this.lastName === "") {
+        alert("last name is required!");
+        return;
+      }
+      if (this.email === "") {
+        alert("email is required!");
+        return;
+      }
+      if (this.deliveryDate === "") {
+        alert("delivery date is required!");
+        return;
+      }
+
+      const orderProducts = CartModule.items.map((data) => {
+        console.log("orderProducts data is: data");
+        return {
+          productId: data.itemInfo?.id,
+          productQuantity: data.itemCount,
+        };
+      });
+
+      const params = {
+        deliverAt: new Date(this.deliveryDate).toISOString(),
+        _orderProducts: orderProducts,
+        firstName: this.firstName,
+        lastName: this.lastName,
+        email: this.email,
+      };
+
+      await OrderModule.placeOrder(params);
+
+      this.$router.push({ name: "Order" });
+    } catch (e) {
+      console.log("on place order e is: ", e);
+    }
   }
 }
 </script>
@@ -70,6 +158,12 @@ export default class Checkout extends Vue {
       background-color: $button-bg;
       color: $white;
       width: 100%;
+    }
+  }
+  .calender-container {
+    margin-top: 50px;
+    label {
+      color: $button-bg;
     }
   }
 }
