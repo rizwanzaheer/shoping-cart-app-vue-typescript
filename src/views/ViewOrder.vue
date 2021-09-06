@@ -1,15 +1,7 @@
 <template>
   <div class="checkout-container">
-    <div class="order-info-container">
+    <div class="order-info-container" v-if="getCartItems.length !== 0">
       <h1 class="text-left title">Order Info: #{{ getOrder.orderNumber }}</h1>
-
-      <!-- <code>
-        <pre>
-            {{ getOrder }}
-          </pre
-        >
-      </code> -->
-
       <h2
         class="order-view-sub-title text-left"
         v-for="item in getCartItems"
@@ -17,23 +9,10 @@
       >
         Product Name: {{ item.itemInfo.name }}, Item: {{ item.itemCount }}x
       </h2>
-      <!-- <router-link to="view-order">
-        <span class="order-view-link">View Order</span>
-      </router-link> -->
     </div>
-
-    <!-- <div class="user-detail-card">
-      <div v-if="getCartTotalItems !== 0">
-        <Card
-          v-for="item in getCartItems"
-          :cardProductItem="item"
-          :key="item.itemInfo.id"
-        />
-      </div>
-      <div v-else>
-        <h2>Oohhoo... Cart is empty!</h2>
-      </div>
-    </div> -->
+    <div v-else>
+      <h1>There is no current order information is present!</h1>
+    </div>
     <div class="checkout-button-container">
       <BaseButton title="New Order" @on-button-click="onNewOrder" />
     </div>

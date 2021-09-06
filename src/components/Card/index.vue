@@ -21,14 +21,28 @@
       </div>
     </div>
     <!-- when the card type is other then product-view -->
-    <div class="card-body" v-else>
+    <div class="other-card-body" v-else>
       <div class="item-count-container">{{ cardProductItem.itemCount }}x</div>
-      <div class="product-info-container">
-        <h1 class="text-left">{{ cardProductItem.itemInfo.productName }}</h1>
-        <h3 class="text-left">€{{ cardProductItem.itemInfo.price }}.00</h3>
+      <div class="products-info-container">
+        <h2 class="text-left title-style">
+          {{ cardProductItem.itemInfo.name }}
+        </h2>
+        <div class="icon-container">
+          <Button iconName="fas fa-minus" />
+          <Button iconName="fas fa-plus" />
+
+          <i
+            class="far fa-trash-alt"
+            style="
+              font-size: 18px;
+              margin-top: 5px;
+              margin-left: 10px;
+              cursor: pointer;
+            "
+          ></i>
+        </div>
       </div>
-      <div>2</div>
-      <div>3</div>
+      <div class="arrow-price-container">3</div>
     </div>
   </div>
 </template>
@@ -37,12 +51,14 @@
 import { Component, Vue, Prop } from "vue-property-decorator";
 import { CartModule } from "@/store/modules/cart";
 
+import Button from "../Button/index.vue";
 import BaseButton from "../BaseButton/index.vue";
 
 @Component({
   name: "Card",
   components: {
     BaseButton,
+    Button,
   },
 })
 export default class extends Vue {
@@ -127,6 +143,84 @@ export default class extends Vue {
       // margin-bottom: 0px;
       color: $price-color;
     }
+  }
+
+  .products-info-container {
+    :nth-child(1) {
+      font-weight: 500;
+      text-transform: capitalize;
+      font-size: 28px;
+      // margin-top: 35px;
+      // margin-bottom: 0px;
+    }
+  }
+}
+.other-card-body {
+  display: flex;
+  flex-direction: row;
+  min-width: 0;
+  width: 100%;
+  word-wrap: break-word;
+  padding: 10px;
+  justify-content: space-between;
+  .item-count-container {
+    min-width: 15%;
+  }
+  // :nth-child(2) {
+  //   min-width: 55%;
+  // }
+  .arrow-price-container {
+    min-width: 30%;
+  }
+
+  .products-info-container {
+    width: 12254px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+  }
+  .icon-container {
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-start;
+  }
+
+  // .button-contain {
+  //   align-items: center;
+  //   /* align-content: center; */
+  //   justify-content: center;
+  //   display: flex;
+  // }
+  // .product-info-container {
+  //   :nth-child(1) {
+  //     font-weight: 500;
+  //     text-transform: capitalize;
+  //     font-size: 28px;
+  //     margin-top: 35px;
+  //     margin-bottom: 0px;
+  //   }
+  //   :nth-child(2) {
+  //     font-weight: 500;
+  //     text-transform: capitalize;
+  //     font-size: 26px;
+  //     margin-top: 0px;
+  //     // margin-bottom: 0px;
+  //     color: $price-color;
+  //   }
+  // }
+
+  // .products-info-container {
+  //   :nth-child(1) {
+  //     font-weight: 500;
+  //     text-transform: capitalize;
+  //     font-size: 28px;
+  //     // margin-top: 35px;
+  //     // margin-bottom: 0px;
+  //   }
+  // }
+
+  .title-style {
+    margin-bottom: 8px;
   }
 }
 @media screen and (max-width: 1024px) {

@@ -54,13 +54,13 @@ class Cart extends VuexModule implements ICardState {
   // ];
 
   @Mutation
-  public addItems(item: object) {
+  public addItems(item: any) {
     console.log('addItems item is: ', item);
     // 1.check if product is already in card or not
     const itemIndex = this.items.findIndex((x: IItemView) => {
-      console.log('x.itemInfo.id is: ', x.itemInfo.id);
+      console.log('x.itemInfo.id is: ', x.itemInfo?.id);
       console.log('item.id is: ', item.id);
-      return x.itemInfo.id === item.id;
+      return x.itemInfo?.id === item?.id;
     });
     console.log('itemIndex is: ', itemIndex);
 
