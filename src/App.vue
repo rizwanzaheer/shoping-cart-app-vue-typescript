@@ -1,14 +1,34 @@
 <template>
   <div id="app">
-    <!-- <div id="nav">
-      <router-link to="/">Home</router-link> |
-      <router-link to="/about">About</router-link>
-    </div> -->
+    <div id="nav">
+      <label for="" class="brand-logo" @click="onBrandLogoClick">
+        Ordering App
+      </label>
+      <div>
+        <router-link to="/">Product</router-link> |
+        <router-link to="/cart">Cart</router-link>
+      </div>
+    </div>
     <router-view />
   </div>
 </template>
 
+
+<script lang="ts">
+import { Component, Vue, Prop } from "vue-property-decorator";
+@Component({
+  name: "App",
+})
+export default class extends Vue {
+  private onBrandLogoClick() {
+    this.$router.push({ name: "Home" });
+  }
+}
+</script>
+
 <style lang="scss">
+@import "./src/styles/variables.scss";
+
 #app {
   font-family: Avenir, Helvetica, Arial, sans-serif;
   -webkit-font-smoothing: antialiased;
@@ -19,11 +39,13 @@
   margin-right: -8px;
   margin-bottom: -14px;
   margin-left: -8px;
-  // background: gray;
 }
 
 #nav {
+  display: flex;
+  justify-content: space-between;
   padding: 30px;
+  background: $lightGray;
 
   a {
     font-weight: bold;
@@ -32,6 +54,9 @@
     &.router-link-exact-active {
       color: #42b983;
     }
+  }
+  .brand-logo {
+    cursor: pointer;
   }
 }
 </style>

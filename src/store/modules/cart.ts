@@ -81,6 +81,11 @@ class Cart extends VuexModule implements ICardState {
       this.totalItems++;
     }
   }
+  @Mutation
+  public onResetCart() {
+    this.items = [];
+    this.totalItems = 0;
+  }
 
   @Action
   public async addItemInCart(productItem: any) {
@@ -90,6 +95,11 @@ class Cart extends VuexModule implements ICardState {
     this.addItems(productItem);
     // this.insertProduct(products);
     return productItem;
+  }
+  @Action
+  public resetCart() {
+    this.onResetCart();
+    return;
   }
 }
 

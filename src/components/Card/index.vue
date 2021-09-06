@@ -22,7 +22,7 @@
     </div>
     <!-- when the card type is other then product-view -->
     <div class="card-body" v-else>
-      <div class="item-count-container">{{ cardProductItem.itemCount }}</div>
+      <div class="item-count-container">{{ cardProductItem.itemCount }}x</div>
       <div class="product-info-container">
         <h1 class="text-left">{{ cardProductItem.itemInfo.productName }}</h1>
         <h3 class="text-left">€{{ cardProductItem.itemInfo.price }}.00</h3>

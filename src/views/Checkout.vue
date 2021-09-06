@@ -1,8 +1,8 @@
 <template>
-  <div class="cart-container">
-    <h1 class="text-left title">Cart:</h1>
+  <div class="checkout-container">
+    <h1 class="text-left title">Checkout:</h1>
 
-    <div class="product-card">
+    <div class="user-detail-card">
       <div v-if="getCartTotalItems !== 0">
         <Card
           v-for="item in getCartItems"
@@ -15,10 +15,7 @@
       </div>
     </div>
     <div class="checkout-button-container">
-      <BaseButton
-        title="Continue to Checkout"
-        @on-button-click="onContinueToCheckout"
-      />
+      <BaseButton title="Place Order" @on-button-click="onPlaceOrder" />
     </div>
   </div>
 </template>
@@ -36,7 +33,7 @@ import BaseButton from "@/components/BaseButton/index.vue";
     BaseButton,
   },
 })
-export default class Cart extends Vue {
+export default class Checkout extends Vue {
   get getCartItems() {
     return CartModule.items;
   }
@@ -44,9 +41,9 @@ export default class Cart extends Vue {
     return CartModule.totalItems;
   }
 
-  onContinueToCheckout() {
-    console.log("onContinueToCheckout");
-    this.$router.push({ name: "Checkout" });
+  onPlaceOrder() {
+    console.log("onPlaceOrder");
+    this.$router.push({ name: "Order" });
   }
 }
 </script>
@@ -56,16 +53,13 @@ export default class Cart extends Vue {
 <style lang="scss">
 @import "./src/styles/variables.scss";
 
-.title {
-  color: $title-color;
-}
-.cart-container {
+.checkout-container {
   width: 100%;
   padding: 0px 50px 5%;
   display: flex;
   flex-direction: column;
 
-  .product-card {
+  .user-detail-card {
     min-height: calc(100vh - 315px);
   }
   .checkout-button-container {

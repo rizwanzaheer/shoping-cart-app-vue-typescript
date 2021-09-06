@@ -76,12 +76,12 @@ export default class Home extends Vue {
 .product-container {
   // background: grey;
   width: 100%;
-  padding: 50px 5%;
+  padding: 0px 50px 5%;
   display: flex;
   flex-direction: column;
   .product-card {
     margin-top: 80px;
-    min-height: calc(100vh - 410px);
+    min-height: calc(100vh - 450px);
   }
 
   .cart-button-container {

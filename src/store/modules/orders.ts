@@ -11,7 +11,7 @@ import HttpService from '@/service/HttpService';
 @Module({ dynamic: true, store, namespaced: true, name: 'orders' })
 class Orders extends VuexModule {
   public allOrder: Array<Object> = [{}];
-  public order: Object = {};
+  public order: Object = { id: parseInt(Math.random() * 10000) };
 
   @Mutation
   public setOrder(orderInfo: object) {
