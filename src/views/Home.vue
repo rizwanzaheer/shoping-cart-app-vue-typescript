@@ -22,6 +22,12 @@
       </pre>
     </code> -->
     </div>
+
+    <div class="cart-button-container">
+      <router-link to="/cart">
+        <BaseButton title="View Cart" @on-button-click="onViewCart" />
+      </router-link>
+    </div>
   </div>
 </template>
 
@@ -31,11 +37,13 @@ import { ProductModule } from "@/store/modules/product";
 import { CartModule } from "@/store/modules/cart";
 import SearchBar from "@/components/SearchBar/index.vue";
 import Card from "@/components/Card/index.vue";
+import BaseButton from "@/components/BaseButton/index.vue";
 
 @Component({
   components: {
     SearchBar,
     Card,
+    BaseButton,
   },
 })
 export default class Home extends Vue {
@@ -68,6 +76,17 @@ export default class Home extends Vue {
   flex-direction: column;
   .product-card {
     margin-top: 5rem;
+  }
+
+  .cart-button-container {
+    // position: absolute;
+    // bottom: 0;
+    margin-top: 30px;
+    .button-container button {
+      background-color: $button-bg;
+      color: $white;
+      width: 100%;
+    }
   }
 }
 </style>

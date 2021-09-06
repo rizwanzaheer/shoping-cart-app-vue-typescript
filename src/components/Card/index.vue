@@ -22,7 +22,11 @@
     </div>
     <!-- when the card type is other then product-view -->
     <div class="card-body" v-else>
-      <div>this {{ cardProductItem }}</div>
+      <div class="item-count-container">{{ cardProductItem.itemCount }}</div>
+      <div class="product-info-container">
+        <h1 class="text-left">{{ cardProductItem.itemInfo.productName }}</h1>
+        <h3 class="text-left">€{{ cardProductItem.itemInfo.price }}.00</h3>
+      </div>
       <div>2</div>
       <div>3</div>
     </div>
@@ -41,7 +45,7 @@ import BaseButton from "../BaseButton/index.vue";
 })
 export default class extends Vue {
   private host = process.env["VUE_APP_ROOT_API_URL"];
-  @Prop({ default: "product-view" }) private cardType!: string;
+  @Prop({}) private cardType!: string;
 
   // @Prop({ default: 0 }) private productItemCount!: number;
   @Prop({}) private cardProductItem!: any;
