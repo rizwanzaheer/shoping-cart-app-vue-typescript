@@ -1,6 +1,14 @@
 <template>
   <div class="button-container">
-    <button @click="onButtonClick">{{ title }}</button>
+    <button @click="onButtonClick">
+      <span>
+        {{ title }}
+      </span>
+      <div class="icon-container" v-if="isItemCount">
+        <!-- <i class="fas fa-search" /> -->
+        <span>{{ itemCountVal }}</span>
+      </div>
+    </button>
   </div>
 </template>
 
@@ -12,6 +20,8 @@ import { Component, Vue, Prop, Emit } from "vue-property-decorator";
 })
 export default class extends Vue {
   @Prop({ default: "Click me!" }) private title!: string;
+  @Prop({ default: false }) private isItemCount!: boolean;
+  @Prop({ default: 0 }) private itemCountVal!: number;
 
   @Emit()
   onButtonClick() {
@@ -20,7 +30,6 @@ export default class extends Vue {
   }
 }
 </script>
-
 
 <style lang="scss">
 @import "./src/styles/variables.scss";
@@ -36,8 +45,13 @@ export default class extends Vue {
     text-transform: capitalize;
     font-weight: bold;
     cursor: pointer;
-    :hover {
-      background: blue;
+    display: flex;
+    span {
+      flex: 5;
+    }
+    .icon-container {
+      // display: flex;
+      // justify-content: flex-end;
     }
   }
 }

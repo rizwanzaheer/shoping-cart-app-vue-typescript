@@ -35,6 +35,8 @@
 
 <script lang="ts">
 import { Component, Vue, Prop } from "vue-property-decorator";
+import { CartModule } from "@/store/modules/cart";
+
 import BaseButton from "../BaseButton/index.vue";
 
 @Component({
@@ -52,6 +54,7 @@ export default class extends Vue {
 
   private onAddToCart(data: string) {
     console.log("onAddToCart data is: ", data);
+    CartModule.addItemInCart(data);
   }
 }
 </script>
