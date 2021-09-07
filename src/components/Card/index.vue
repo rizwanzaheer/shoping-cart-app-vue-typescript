@@ -82,7 +82,7 @@
 </template>
 
 <script lang="ts">
-import { Vue, Component, Vue, Prop, Emit } from "vue-property-decorator";
+import { Vue, Component, Prop, Emit } from "vue-property-decorator";
 import { CartModule } from "@/store/modules/cart";
 
 import Button from "../Button/index.vue";
