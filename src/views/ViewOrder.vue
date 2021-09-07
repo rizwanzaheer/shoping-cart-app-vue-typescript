@@ -7,8 +7,12 @@
         v-for="item in getCartItems"
         :key="item.itemInfo.id"
       >
-        Product Name: {{ item.itemInfo.name }}, Item: {{ item.itemCount }}x
+        {{ item.itemInfo.name }} => {{ item.itemCount }}x: Total Price = €{{
+          item.itemInfo.price * item.itemCount
+        }}.00
       </h2>
+      <br />
+      <h1 class="text-left">Grand Amount is: €{{ grandTotal }}.00</h1>
     </div>
     <div v-else>
       <h1>There is no current order information is present!</h1>
@@ -18,7 +22,6 @@
     </div>
   </div>
 </template>
-
 
 <script lang="ts">
 import { Component, Vue } from "vue-property-decorator";
@@ -34,6 +37,7 @@ import BaseButton from "@/components/BaseButton/index.vue";
   },
 })
 export default class ViewOrder extends Vue {
+  private grandTotal: number = 0;
   get getCartItems() {
     return CartModule.items;
   }
@@ -44,17 +48,25 @@ export default class ViewOrder extends Vue {
     return CartModule.totalItems;
   }
 
-  onNewOrder() {
-    console.log("onContinueToCheckout");
+  getGrandTotal() {
+    let total = 0;
+    CartModule.items.map((data) => {
+      total += data.itemInfo?.price * data?.itemCount;
+      return;
+    });
+    this.grandTotal = total;
+  }
 
+  onNewOrder() {
     CartModule.resetCart();
 
     this.$router.push({ name: "Home" });
   }
+  mounted() {
+    this.getGrandTotal();
+  }
 }
 </script>
-
-
 
 <style lang="scss">
 @import "./src/styles/variables.scss";

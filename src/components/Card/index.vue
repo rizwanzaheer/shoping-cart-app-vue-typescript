@@ -12,10 +12,22 @@
       <div class="product-info-container">
         <h1 class="text-left">{{ cardProductItem.name }}</h1>
         <h3 class="text-left">€{{ cardProductItem.price }}.00</h3>
+
+        <p class="text-left" v-if="dataType === 'single'">
+          Not Available on
+          {{ cardProductItem.notAvailableFrom | moment("dddd, MMM Do YY") }}
+        </p>
+        <p class="text-left" v-else>
+          Not Available from:
+          {{ cardProductItem.notAvailableFrom | moment("dddd, MMM Do YY") }}
+          - to:
+          {{ cardProductItem.notAvailableTo | moment("dddd, MMM Do YY") }}
+        </p>
       </div>
       <div class="button-contain">
         <BaseButton
           title="Add to Cart"
+          :disabled="!isProductAvailable || isHappenToday"
           @on-button-click="(d) => onAddToCart(cardProductItem)"
         />
       </div>
@@ -70,7 +82,7 @@
 </template>
 
 <script lang="ts">
-import { Component, Vue, Prop, Emit } from "vue-property-decorator";
+import { Vue, Component, Vue, Prop, Emit } from "vue-property-decorator";
 import { CartModule } from "@/store/modules/cart";
 
 import Button from "../Button/index.vue";
@@ -85,13 +97,17 @@ import BaseButton from "../BaseButton/index.vue";
 })
 export default class extends Vue {
   private host = process.env["VUE_APP_ROOT_API_URL"];
+  private isProductAvailable: boolean = true;
+  private dataType: string = "single";
+  private isHappenToday: boolean = false;
+  private showAvailableAlert: boolean = false;
+
   @Prop({}) private cardType!: string;
 
   // @Prop({ default: 0 }) private productItemCount!: number;
   @Prop({}) private cardProductItem!: any;
 
   private onAddToCart(data: string) {
-    console.log("onAddToCart data is: ", data);
     CartModule.addItemInCart(data);
   }
   @Emit()
@@ -109,6 +125,59 @@ export default class extends Vue {
   public onProductRemoveClick(itemId: string) {
     console.log("onProductRemoveClick id is: ", itemId);
     return;
+  }
+
+  getDates() {
+    if (
+      this.cardProductItem.notAvailableFrom !== null &&
+      this.cardProductItem.notAvailableTo !== null
+    ) {
+      this.dataType = "double";
+      console.log("double date Available");
+
+      const startCheckDateDiff = Vue.moment(new Date()).diff(
+        Vue.moment(this.cardProductItem.notAvailableFrom),
+        "days"
+      );
+      const endCheckDateDiff = Vue.moment(new Date()).diff(
+        Vue.moment(this.cardProductItem.notAvailableTo),
+        "days"
+      );
+      console.log("this.cardProductItem is: ", this.cardProductItem.name);
+      console.log(" startCheckDateDiff is: ", startCheckDateDiff);
+      console.log("endCheckDateDiff is: ", endCheckDateDiff);
+      if (startCheckDateDiff > 0 && endCheckDateDiff < 0) {
+        this.isProductAvailable = false;
+        this.showAvailableAlert = true;
+      }
+    } else {
+      console.log("single date Available");
+      const checkDateDiff = Vue.moment(new Date()).diff(
+        Vue.moment(this.cardProductItem.notAvailableFrom),
+        "days"
+      );
+
+      if (checkDateDiff === 0) {
+        this.isProductAvailable = false;
+        // this.showAvailableAlert = true;
+      }
+      console.log("this.cardProductItem is: ", this.cardProductItem.name);
+      console.log("checkDateDiff is: ", checkDateDiff);
+    }
+  }
+  checkProductAvailability() {
+    // console.log(
+    //   "this.moment is: ",
+    //   Vue.moment(new Date()).diff(Vue.moment(new Date() + 1), "days")
+    // );
+    // this.dataType === "single"
+    //   ? (this.isProductAvailable = false)
+    //   : (this.isProductAvailable = true);
+  }
+
+  mounted() {
+    this.getDates();
+    this.checkProductAvailability();
   }
 }
 </script>

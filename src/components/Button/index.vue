@@ -16,7 +16,6 @@ export default class extends Vue {
 
   @Emit()
   onButtonClick() {
-    console.log("click working");
     return;
   }
 }

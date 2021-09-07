@@ -1,4 +1,7 @@
 import Vue from 'vue';
+import * as moment from 'vue-moment';
+
+Vue.use(moment);
 
 // Components
 import App from './App.vue';

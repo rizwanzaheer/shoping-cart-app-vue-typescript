@@ -1,6 +1,6 @@
 <template>
   <div class="button-container">
-    <button @click="onButtonClick">
+    <button @click="onButtonClick" :disabled="disabled">
       <span>
         {{ title }}
       </span>
@@ -21,11 +21,11 @@ import { Component, Vue, Prop, Emit } from "vue-property-decorator";
 export default class extends Vue {
   @Prop({ default: "Click me!" }) private title!: string;
   @Prop({ default: false }) private isItemCount!: boolean;
+  @Prop({ default: false }) private disabled!: boolean;
   @Prop({ default: 0 }) private itemCountVal!: number;
 
   @Emit()
   onButtonClick() {
-    console.log("click working");
     return;
   }
 }
@@ -53,6 +53,16 @@ export default class extends Vue {
       // display: flex;
       // justify-content: flex-end;
     }
+  }
+  button:disabled {
+    // background: transparent;
+    color: currentColor;
+    cursor: not-allowed;
+    opacity: 0.8;
+    text-decoration: none;
+    // i {
+    //   cursor: not-allowed;
+    // }
   }
 }
 </style>
