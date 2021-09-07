@@ -1,5 +1,5 @@
 <template>
-  <button class="btn" @click="onButtonClick">
+  <button class="btn" @click="onButtonClick" :disabled="disabled">
     <i :class="iconName"></i>
   </button>
 </template>
@@ -12,6 +12,7 @@ import { Component, Vue, Prop, Emit } from "vue-property-decorator";
 })
 export default class extends Vue {
   @Prop({ default: "fas fa-plus" }) private iconName!: string;
+  @Prop({ default: false }) private disabled!: boolean;
 
   @Emit()
   onButtonClick() {
@@ -25,18 +26,29 @@ export default class extends Vue {
 @import "./src/styles/variables.scss";
 
 .btn {
-  background-color: $icon-button-bg; /* Blue background */
-  border: none; /* Remove borders */
-  color: $btn-icon-color; /* White text */
-  padding: 6px 20px; /* Some padding */
-  font-size: 10px; /* Set a font size */
-  cursor: pointer; /* Mouse pointer on hover */
+  background-color: $icon-button-bg;
+  border: none;
+  color: $btn-icon-color;
+  padding: 6px 20px;
+  font-size: 10px;
+  cursor: pointer;
   border-radius: 5px;
+  height: 36px;
   .fas {
     font-size: 18px;
   }
 }
 
+button:disabled {
+  // background: transparent;
+  color: currentColor;
+  cursor: not-allowed;
+  opacity: 0.5;
+  text-decoration: none;
+  i {
+    cursor: not-allowed;
+  }
+}
 /* Darker background on mouse-over */
 .btn:hover {
   background-color: $button-bg;

@@ -55,23 +55,17 @@ class Cart extends VuexModule implements ICardState {
 
   @Mutation
   public addItems(item: any) {
-    console.log('addItems item is: ', item);
     // 1.check if product is already in card or not
-    const itemIndex = this.items.findIndex((x: IItemView) => {
-      console.log('x.itemInfo.id is: ', x.itemInfo?.id);
-      console.log('item.id is: ', item.id);
-      return x.itemInfo?.id === item?.id;
-    });
-    console.log('itemIndex is: ', itemIndex);
+    const itemIndex = this.items.findIndex(
+      (x: IItemView) => x.itemInfo?.id === item?.id
+    );
 
     // 2. if present then just simply update the product count
     if (itemIndex > -1) {
-      console.log('product found ');
       this.items[itemIndex].itemCount++;
       this.totalItems++;
     } else {
       // 3. if not then insert item in card & update the count
-      console.log('product not found');
       this.items.push({
         itemInfo: {
           ...item,
@@ -81,6 +75,58 @@ class Cart extends VuexModule implements ICardState {
       this.totalItems++;
     }
   }
+
+  @Mutation
+  public deleteProduct(productId: number) {
+    // 1.check if product is already in card or not
+    const itemIndex = this.items.findIndex(
+      (x: IItemView) => x.itemInfo?.id === productId
+    );
+
+    // 2. if yes then remove other move on
+    if (itemIndex > -1) {
+      this.totalItems = this.totalItems - this.items[itemIndex]?.itemCount;
+      this.items.splice(itemIndex, 1);
+      this.items = [...this.items];
+    }
+  }
+
+  @Mutation
+  public deleteItem(productId: number) {
+    // 1.check if product is already in card or not
+    const itemIndex = this.items.findIndex(
+      (x: IItemView) => x.itemInfo?.id === productId
+    );
+
+    // 2. if yes then remove other move on
+    if (itemIndex > -1) {
+      this.totalItems = this.totalItems - 1;
+      const updatedVal = {
+        ...this.items[itemIndex],
+        itemCount: this.items[itemIndex]?.itemCount - 1,
+      };
+      this.items[itemIndex] = updatedVal;
+    }
+  }
+
+  @Mutation
+  public insertMoreItem(itemId: number) {
+    // 1.check if product is already in card or not
+    const itemIndex = this.items.findIndex(
+      (x: IItemView) => x.itemInfo?.id === itemId
+    );
+
+    // 2. if yes then remove other move on
+    if (itemIndex > -1) {
+      this.totalItems = this.totalItems + 1;
+      const updatedVal = {
+        ...this.items[itemIndex],
+        itemCount: this.items[itemIndex]?.itemCount + 1,
+      };
+      this.items[itemIndex] = updatedVal;
+    }
+  }
+
   @Mutation
   public onResetCart() {
     this.items = [];
@@ -90,9 +136,7 @@ class Cart extends VuexModule implements ICardState {
   @Action
   public async addItemInCart(productItem: any) {
     try {
-      console.log('addItemInCart productItem is: ', productItem);
       // const { data: products } = await HttpService.get('products');
-      // console.log('action fetchProducts is: ', productItem);
       this.addItems(productItem);
       // this.insertProduct(products);
       return productItem;
@@ -100,6 +144,38 @@ class Cart extends VuexModule implements ICardState {
       throw new Error(e);
     }
   }
+
+  @Action
+  public async addMoreItem(itemId: any) {
+    try {
+      this.insertMoreItem(itemId);
+      return itemId;
+    } catch (e) {
+      throw new Error(e);
+    }
+  }
+
+  // here we remove whole pepsi/fanta product from cart
+  @Action
+  public async removeProductFromCart(productId: any) {
+    try {
+      this.deleteProduct(productId);
+      return productId;
+    } catch (e) {
+      throw new Error(e);
+    }
+  }
+
+  @Action
+  public async removeItemFromCart(itemId: any) {
+    try {
+      this.deleteItem(itemId);
+      return itemId;
+    } catch (e) {
+      throw new Error(e);
+    }
+  }
+
   @Action
   public resetCart() {
     this.onResetCart();

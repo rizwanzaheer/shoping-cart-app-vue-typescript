@@ -22,33 +22,55 @@
     </div>
     <!-- when the card type is other then product-view -->
     <div class="other-card-body" v-else>
-      <div class="item-count-container">{{ cardProductItem.itemCount }}x</div>
+      <div class="item-count-container">
+        <h2>{{ cardProductItem.itemCount }}x</h2>
+      </div>
       <div class="products-info-container">
         <h2 class="text-left title-style">
           {{ cardProductItem.itemInfo.name }}
         </h2>
         <div class="icon-container">
-          <Button iconName="fas fa-minus" />
-          <Button iconName="fas fa-plus" />
-
-          <i
-            class="far fa-trash-alt"
-            style="
-              font-size: 18px;
-              margin-top: 5px;
-              margin-left: 10px;
-              cursor: pointer;
-            "
-          ></i>
+          <div class="icon-button-container-left">
+            <Button
+              iconName="fas fa-minus"
+              :disabled="cardProductItem.itemCount < 2"
+              @on-button-click="
+                () => onItemRemoveClick(cardProductItem.itemInfo.id)
+              "
+            />
+            <hr />
+            <Button
+              iconName="fas fa-plus"
+              @on-button-click="
+                () => onItemAddClick(cardProductItem.itemInfo.id)
+              "
+            />
+          </div>
+          <div class="icon-button-container-right">
+            <i
+              class="far fa-trash-alt"
+              @click="() => onProductRemoveClick(cardProductItem.itemInfo.id)"
+            ></i>
+          </div>
         </div>
       </div>
-      <div class="arrow-price-container">3</div>
+      <div class="arrow-price-container">
+        <div class="icon-contain">
+          <i
+            class="fas fa-chevron-right"
+            style="font-size: 18px; font-weight: bold"
+          ></i>
+        </div>
+        <div class="price-contain">
+          <h3 class="">€{{ cardProductItem.itemInfo.price }}.00</h3>
+        </div>
+      </div>
     </div>
   </div>
 </template>
 
 <script lang="ts">
-import { Component, Vue, Prop } from "vue-property-decorator";
+import { Component, Vue, Prop, Emit } from "vue-property-decorator";
 import { CartModule } from "@/store/modules/cart";
 
 import Button from "../Button/index.vue";
@@ -71,6 +93,22 @@ export default class extends Vue {
   private onAddToCart(data: string) {
     console.log("onAddToCart data is: ", data);
     CartModule.addItemInCart(data);
+  }
+  @Emit()
+  public onItemRemoveClick(itemId: string) {
+    // console.log("onItemRemoveClick itemId is: ", itemId);
+    return;
+  }
+
+  @Emit()
+  public onItemAddClick(itemId: string) {
+    // console.log("onItemAddClick itemId is: ", itemId);
+    return;
+  }
+  @Emit()
+  public onProductRemoveClick(itemId: string) {
+    console.log("onProductRemoveClick id is: ", itemId);
+    return;
   }
 }
 </script>
@@ -165,12 +203,37 @@ export default class extends Vue {
   justify-content: space-between;
   .item-count-container {
     min-width: 15%;
+    h2 {
+      padding: 0;
+      margin-top: 10px;
+      color: $button-bg;
+    }
   }
   // :nth-child(2) {
   //   min-width: 55%;
   // }
   .arrow-price-container {
     min-width: 30%;
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    justify-content: flex-end;
+    align-items: flex-end;
+    align-content: center;
+    .icon-contain,
+    .price-contain {
+      min-height: 50%;
+      display: flex;
+      align-items: center;
+      margin-right: 20px;
+      color: $input-text-bg;
+    }
+    .icon-contain {
+      color: $right-arrow-color;
+    }
+    .price-contain {
+      color: $price-color;
+    }
   }
 
   .products-info-container {
@@ -183,6 +246,20 @@ export default class extends Vue {
     display: flex;
     flex-direction: row;
     justify-content: flex-start;
+    align-items: center;
+    .icon-button-container-left {
+      display: inherit;
+      background: $icon-button-bg;
+      border-radius: 5px;
+      hr {
+        color: $input-text-title-color;
+      }
+    }
+    .icon-button-container-right {
+      font-size: 22px;
+      margin: 0px 15px;
+      cursor: pointer;
+    }
   }
 
   // .button-contain {
@@ -220,7 +297,9 @@ export default class extends Vue {
   // }
 
   .title-style {
+    margin-top: 10px;
     margin-bottom: 8px;
+    text-transform: capitalize;
   }
 }
 @media screen and (max-width: 1024px) {

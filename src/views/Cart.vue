@@ -8,6 +8,9 @@
           v-for="item in getCartItems"
           :cardProductItem="item"
           :key="item.itemInfo.id"
+          @on-item-add-click="onItemAddClick"
+          @on-item-remove-click="onItemRemoveClick"
+          @on-product-remove-click="onProductRemoveClick"
         />
       </div>
       <div v-else>
@@ -18,7 +21,9 @@
       <BaseButton
         title="Continue to Checkout"
         @on-button-click="onContinueToCheckout"
+        v-if="getCartTotalItems !== 0"
       />
+      <BaseButton v-else title="Go Home" @on-button-click="backToHome" />
     </div>
   </div>
 </template>
@@ -47,6 +52,23 @@ export default class Cart extends Vue {
   onContinueToCheckout() {
     console.log("onContinueToCheckout");
     this.$router.push({ name: "Checkout" });
+  }
+  backToHome() {
+    console.log("onContinueToCheckout");
+    this.$router.push({ name: "Home" });
+  }
+
+  public onItemAddClick(itemId: string) {
+    console.log("onItemAddClick itemId is: ", itemId);
+    CartModule.addMoreItem(itemId);
+  }
+  public onItemRemoveClick(itemId: string) {
+    console.log("onItemRemoveClick itemId is: ", itemId);
+    CartModule.removeItemFromCart(itemId);
+  }
+  public onProductRemoveClick(itemId: string) {
+    console.log("onProductRemoveClick itemId is: ", itemId);
+    CartModule.removeProductFromCart(itemId);
   }
 }
 </script>
