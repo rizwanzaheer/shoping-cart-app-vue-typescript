@@ -1,13 +1,12 @@
 <template>
   <div class="card-container">
-    <!-- when the card type is product-view -->
+    <!-- when the card type is product-view start -->
     <div class="card-body" v-if="cardType === 'product-view'">
       <div class="img-container">
         <img
           :src="`${host}${cardProductItem.imagePath}`"
           :alt="cardProductItem.name"
         />
-        <!-- {{ cardProductItem.imagePath }} -->
       </div>
       <div class="product-info-container">
         <h1 class="text-left">{{ cardProductItem.name }}</h1>
@@ -32,7 +31,9 @@
         />
       </div>
     </div>
-    <!-- when the card type is other then product-view -->
+    <!-- when the card type is product-view ends -->
+
+    <!-- when the card type is other then product-view start -->
     <div class="other-card-body" v-else>
       <div class="item-count-container">
         <h2>{{ cardProductItem.itemCount }}x</h2>
@@ -78,6 +79,7 @@
         </div>
       </div>
     </div>
+    <!-- when the card type is other then product-view ends -->
   </div>
 </template>
 
@@ -112,18 +114,15 @@ export default class extends Vue {
   }
   @Emit()
   public onItemRemoveClick(itemId: string) {
-    // console.log("onItemRemoveClick itemId is: ", itemId);
     return;
   }
 
   @Emit()
   public onItemAddClick(itemId: string) {
-    // console.log("onItemAddClick itemId is: ", itemId);
     return;
   }
   @Emit()
   public onProductRemoveClick(itemId: string) {
-    console.log("onProductRemoveClick id is: ", itemId);
     return;
   }
 
@@ -133,7 +132,6 @@ export default class extends Vue {
       this.cardProductItem.notAvailableTo !== null
     ) {
       this.dataType = "double";
-      console.log("double date Available");
 
       const startCheckDateDiff = Vue.moment(new Date()).diff(
         Vue.moment(this.cardProductItem.notAvailableFrom),
@@ -143,15 +141,11 @@ export default class extends Vue {
         Vue.moment(this.cardProductItem.notAvailableTo),
         "days"
       );
-      console.log("this.cardProductItem is: ", this.cardProductItem.name);
-      console.log(" startCheckDateDiff is: ", startCheckDateDiff);
-      console.log("endCheckDateDiff is: ", endCheckDateDiff);
       if (startCheckDateDiff > 0 && endCheckDateDiff < 0) {
         this.isProductAvailable = false;
         this.showAvailableAlert = true;
       }
     } else {
-      console.log("single date Available");
       const checkDateDiff = Vue.moment(new Date()).diff(
         Vue.moment(this.cardProductItem.notAvailableFrom),
         "days"
@@ -161,8 +155,6 @@ export default class extends Vue {
         this.isProductAvailable = false;
         // this.showAvailableAlert = true;
       }
-      console.log("this.cardProductItem is: ", this.cardProductItem.name);
-      console.log("checkDateDiff is: ", checkDateDiff);
     }
   }
   checkProductAvailability() {

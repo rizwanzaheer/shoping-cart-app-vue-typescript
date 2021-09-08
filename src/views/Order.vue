@@ -1,5 +1,6 @@
 <template>
   <div class="checkout-container">
+    <!-- view oder information container start -->
     <div class="order-info-container">
       <h1 class="title">Order #{{ getOrder.orderNumber }}</h1>
       <h1 class="order-sub-title">has been placed</h1>
@@ -7,19 +8,9 @@
         <span class="order-view-link">View Order</span>
       </router-link>
     </div>
+    <!-- view oder information container ends -->
 
-    <!-- <div class="user-detail-card">
-      <div v-if="getCartTotalItems !== 0">
-        <Card
-          v-for="item in getCartItems"
-          :cardProductItem="item"
-          :key="item.itemInfo.id"
-        />
-      </div>
-      <div v-else>
-        <h2>Oohhoo... Cart is empty!</h2>
-      </div>
-    </div> -->
+    <!-- Place new oder bottom button -->
     <div class="checkout-button-container">
       <BaseButton title="New Order" @on-button-click="onNewOrder" />
     </div>

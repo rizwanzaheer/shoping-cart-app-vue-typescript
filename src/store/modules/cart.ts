@@ -6,7 +6,6 @@ import {
   Action,
   getModule,
 } from 'vuex-module-decorators';
-import HttpService from '@/service/HttpService';
 
 import { IProductView } from './product';
 
@@ -116,7 +115,8 @@ class Cart extends VuexModule implements ICardState {
       (x: IItemView) => x.itemInfo?.id === itemId
     );
 
-    // 2. if yes then remove other move on
+    // 2. if yes then then simply update its count instead
+    // of adding whole new obj
     if (itemIndex > -1) {
       this.totalItems = this.totalItems + 1;
       const updatedVal = {
@@ -136,9 +136,7 @@ class Cart extends VuexModule implements ICardState {
   @Action
   public async addItemInCart(productItem: any) {
     try {
-      // const { data: products } = await HttpService.get('products');
       this.addItems(productItem);
-      // this.insertProduct(products);
       return productItem;
     } catch (e) {
       throw new Error(e);

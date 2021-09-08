@@ -27,17 +27,13 @@ class Orders extends VuexModule {
   @Action
   public async getAllOrder() {
     const { data: orders } = await HttpService.get(`orders`);
-    // this.context.commit('setOrders', setOrders);
     this.setOrders({ ...orders });
   }
 
   @Action
   public async placeOrder(orderInfo: object) {
     try {
-      console.log('placeOrder info is: ', orderInfo);
       const { data } = await HttpService.post(`orders`, orderInfo);
-      // this.context.commit('setOrders', setOrders);
-      console.log('order.orderInfo is: ', data.orderInfo);
       this.setOrder({ ...data.orderInfo });
       storageSave('userInfo', { ...data.user });
       return data;

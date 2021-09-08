@@ -1,5 +1,6 @@
 <template>
   <div class="checkout-container">
+    <!-- view complete order information container start -->
     <div class="order-info-container" v-if="getCartItems.length !== 0">
       <h1 class="text-left title">Order Info: #{{ getOrder.orderNumber }}</h1>
       <h2
@@ -17,6 +18,9 @@
     <div v-else>
       <h1>There is no current order information is present!</h1>
     </div>
+    <!-- view complete order information container ends -->
+
+    <!-- bottom button  -->
     <div class="checkout-button-container">
       <BaseButton title="New Order" @on-button-click="onNewOrder" />
     </div>

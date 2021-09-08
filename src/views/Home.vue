@@ -1,8 +1,10 @@
 <template>
   <div class="product-container">
     <h1 class="text-left title">Products:</h1>
+
     <SearchBar placeholder="Search product..." />
 
+    <!-- show availe product container start -->
     <div class="product-card">
       <div v-if="getAllProducts.length !== 0">
         <Card
@@ -16,7 +18,9 @@
         <h2>Sorry! Products are not Available...</h2>
       </div>
     </div>
+    <!-- show availe product container ends -->
 
+    <!-- bottom button -->
     <div class="cart-button-container">
       <BaseButton
         title="View Cart"

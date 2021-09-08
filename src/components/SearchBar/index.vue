@@ -1,6 +1,5 @@
 <template>
   <div class="search-bar-container">
-    <!-- <label class="text-left" v-if="type !== 'search'">label</label> -->
     <div class="input-group">
       <div :class="['input-group-prepend', 'input-group-prepend-icon-push']">
         <div class="input-group-text"><i class="fas fa-search"></i></div>
@@ -32,10 +31,6 @@ import debounce from "lodash-es/debounce";
 export default class extends Vue {
   private searchText = "";
   @Prop({ default: "Search ...." }) private placeholder!: string;
-  // private searchItem(e: string) {
-  //@input="searchItem($event.target.value)"  // call this in component
-  //   // ProductModule.searchItem(e);
-  // }
 
   created() {
     this.onDebouncedVariable = debounce(this.onDebouncedVariable, 500);

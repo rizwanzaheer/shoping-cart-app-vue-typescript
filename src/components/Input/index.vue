@@ -18,7 +18,7 @@
 </template>
 
 <script lang="ts">
-import { Component, Vue, Watch, Prop, Emit } from "vue-property-decorator";
+import { Component, Vue, Prop, Emit } from "vue-property-decorator";
 import { ProductModule } from "@/store/modules/product";
 import debounce from "lodash-es/debounce";
 
@@ -35,15 +35,7 @@ export default class extends Vue {
     this.onDebouncedVariable = debounce(this.onDebouncedVariable, 500);
   }
 
-  // @Watch("inputData")
-  // onVariable() {
-  //   // this.onDebouncedVariable();
-  //   this.onInputChange();
-  // }
-
   private searchItem(e: string) {
-    // @input="searchItem($event.target.value)"  // call this in component
-    // ProductModule.searchItem(e);
     this.inputData = e;
   }
 
@@ -53,7 +45,6 @@ export default class extends Vue {
 
   @Emit()
   onInputChange(e: string) {
-    console.log("onInputChange is: ", e);
     return e;
   }
 

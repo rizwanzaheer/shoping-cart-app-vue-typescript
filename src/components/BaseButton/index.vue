@@ -5,7 +5,6 @@
         {{ title }}
       </span>
       <div class="icon-container" v-if="isItemCount">
-        <!-- <i class="fas fa-search" /> -->
         <span>{{ itemCountVal }}</span>
       </div>
     </button>

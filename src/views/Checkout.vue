@@ -2,6 +2,7 @@
   <div class="checkout-container">
     <h1 class="text-left title">Checkout:</h1>
 
+    <!-- Your Deatils card start -->
     <div class="user-detail-card">
       <h1 class="text-left title">Your details:</h1>
 
@@ -36,6 +37,9 @@
         </div>
       </div>
     </div>
+    <!-- Your Deatils card ends -->
+
+    <!-- buttom button -->
     <div class="checkout-button-container">
       <BaseButton title="Place Order" @on-button-click="onPlaceOrder" />
     </div>
@@ -70,19 +74,15 @@ export default class Checkout extends Vue {
     return CartModule.totalItems;
   }
   private onChangeFirstName(e: string) {
-    console.log("onChangeFirstName is: ", e);
     this.firstName = e;
   }
   private onChangeLastName(e: string) {
-    console.log("onChangeLastName is: ", e);
     this.lastName = e;
   }
   private onChangeEmail(e: string) {
-    console.log("onChangeEmail is: ", e);
     this.email = e;
   }
   private onChangeDeliverDate(e: string) {
-    console.log("onChangeDeliverDate is: ", e);
     this.deliveryDate = e;
   }
   mounted() {
@@ -90,8 +90,6 @@ export default class Checkout extends Vue {
   }
 
   public async onPlaceOrder() {
-    console.log("onPlaceOrder");
-
     try {
       if (this.firstName === "") {
         alert("name is required!");
@@ -111,7 +109,6 @@ export default class Checkout extends Vue {
       }
 
       const orderProducts = CartModule.items.map((data) => {
-        console.log("orderProducts data is: data");
         return {
           productId: data.itemInfo?.id,
           productQuantity: data.itemCount,

@@ -2,6 +2,7 @@
   <div class="cart-container">
     <h1 class="text-left title">Cart:</h1>
 
+    <!-- render products in items view start  -->
     <div class="product-card">
       <div v-if="getCartTotalItems !== 0">
         <Card
@@ -17,6 +18,9 @@
         <h2>Oohhoo... Cart is empty!</h2>
       </div>
     </div>
+    <!-- render products in items view ends  -->
+
+    <!-- Bottom button container start -->
     <div class="checkout-button-container">
       <BaseButton
         title="Continue to Checkout"
@@ -25,6 +29,7 @@
       />
       <BaseButton v-else title="Go Home" @on-button-click="backToHome" />
     </div>
+    <!-- Bottom button container ends -->
   </div>
 </template>
 
@@ -50,24 +55,19 @@ export default class Cart extends Vue {
   }
 
   onContinueToCheckout() {
-    console.log("onContinueToCheckout");
     this.$router.push({ name: "Checkout" });
   }
   backToHome() {
-    console.log("onContinueToCheckout");
     this.$router.push({ name: "Home" });
   }
 
   public onItemAddClick(itemId: string) {
-    console.log("onItemAddClick itemId is: ", itemId);
     CartModule.addMoreItem(itemId);
   }
   public onItemRemoveClick(itemId: string) {
-    console.log("onItemRemoveClick itemId is: ", itemId);
     CartModule.removeItemFromCart(itemId);
   }
   public onProductRemoveClick(itemId: string) {
-    console.log("onProductRemoveClick itemId is: ", itemId);
     CartModule.removeProductFromCart(itemId);
   }
 }
