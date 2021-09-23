@@ -1,4 +1,4 @@
-# order24-assignment
+# Shoping Cart App with Vue Typescript Class Component
 
 ## Project setup
 ```
